@@ -36,10 +36,6 @@ deploy:
   - kubectl apply -f ./deploy-kong-test.yml
   - name: Deploy serverless
     command: sls deploy --stage local -c okteto-serverless.yml --verbose
-  - name: Set users url
-    command: echo "OKTETO_EXTERNAL_USERS_ENDPOINTS_LAMBDA_URL=<<funcion-endpoint>>" >> $OKTETO_ENV
-  - name: Set users-acl url
-    command: echo "OKTETO_EXTERNAL_USERS_ACL_ENDPOINTS_LAMBDA_URL=<<funcion-endpoint>>" >> $OKTETO_ENV
 
 
 external:
@@ -48,8 +44,10 @@ external:
     notes: .okteto/users.md
     endpoints:
     - name: lambda
+      url: https://${OKTETO_NAMESPACE}.xxx
   users-acl:
     icon: function
     notes: .okteto/users-acl.md
     endpoints:
     - name: lambda
+      url: https://${OKTETO_NAMESPACE}.xxx
