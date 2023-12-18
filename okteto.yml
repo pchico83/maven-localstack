@@ -1,6 +1,7 @@
 build:
   maven:
     dockerfile: Dockerfile.okteto
+    target: build
   users:
     image: artifactory.xxx.io:6555/okteto/users:okteto
     dockerfile: Dockerfile.okteto
