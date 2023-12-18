@@ -1,7 +1,0 @@
-ARG OKTETO_BUILD_MAVEN_IMAGE
-FROM ${OKTETO_BUILD_MAVEN_IMAGE} as maven-build
-
-FROM artifactory.xxx.io:6555/xxx-amazonlinux:latest
-COPY --from=maven-build service-user-acl.tar /opt/xxx/
-EXPOSE 443
-CMD /opt/xxx/init-bin/start-init.sh &&  /opt/xxx/bin/start-services.sh

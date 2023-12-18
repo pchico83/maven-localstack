@@ -1,0 +1,18 @@
+FROM artifactory.xxx.io:6555/xxx-builder-img:2.0 as maven-build
+
+COPY . .
+RUN --mount=type=cache,target=/root/.m2  mvn -s .m2/settings.xml install -DskipTests
+
+FROM artifactory.xxx.io:6555/xxx-amazonlinux:latest as users
+COPY --from=maven-build service-users.tar /opt/xxx/
+EXPOSE 443
+CMD /opt/xxx/init-bin/start-init.sh &&  /opt/xxx/bin/start-services.sh
+
+FROM artifactory.xxx.io:6555/xxx-amazonlinux:latest as users-acl
+COPY --from=maven-build service-users-acl.tar /opt/xxx/
+EXPOSE 443
+CMD /opt/xxx/init-bin/start-init.sh &&  /opt/xxx/bin/start-services.sh
+
+FROM <<your-sls-image>> as sls
+COPY --from=maven-build *.tar
+EXPOSE 443

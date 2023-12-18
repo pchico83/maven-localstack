@@ -1,7 +1,0 @@
-FROM artifactory.xxx.io:6555/xxx-builder-img:2.0
-
-COPY . .
-RUN --mount=type=cache,target=/root/.m2  mvn -s .m2/settings.xml install -DskipTests
-
-
-
